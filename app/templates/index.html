@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Car Catalog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #121212; color: #e0e0e0; }
+        .card { background-color: #1e1e1e; border: 1px solid #333; transition: transform 0.3s; }
+        .card:hover { transform: translateY(-10px); border-color: #007bff; }
+        .card-title { color: #007bff; font-weight: bold; }
+        .badge { margin-right: 5px; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark mb-5">
+    <div class="container">
+        <span class="navbar-brand mb-0 h1">🏎️ My Car Collection</span>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        {% for car in cars %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ url_for('static', filename=car.image) }}" class="card-img-top" alt="{{ car.name }}" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ car.name }}</h5>
+                    <p class="text-muted small">{{ car.engine }} • {{ car.hp }} HP</p>
+                    <p class="card-text">{{ car.description }}</p>
+                    <div>
+                        {% for tag in car.tags %}
+                        <span class="badge bg-secondary text-dark">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
