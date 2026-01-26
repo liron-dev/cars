@@ -1,13 +1,12 @@
-from flask import Flask
+from flask import Flask, render_template
 
 # Create the Flask application instance
 app = Flask(__name__)
 
 # Route the home page to this function
 @app.route('/')
-def hello_world():
-    """Returns a simple greeting message."""
-    return 'Hello, World!'
+def index():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     # app.run() starts the local server
