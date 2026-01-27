@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # The Web Application Service
+  web:
+    build: 
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=cars_db
+      - DB_USER=myuser
+      - DB_PASS=mypassword
+    depends_on:
+      - db
+    restart: always
+
+  # The Database Service
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: cars_db
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      # This seeds the DB with a script on first start
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      # This persists the data so it survives container restarts
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+# Define the volume for persistence
+volumes:
+  postgres_data:
