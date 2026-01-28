@@ -15,7 +15,6 @@ services:
       - DB_PASS=mypassword
     depends_on:
       - db
-    restart: always
 
   # The Database Service
   db:
@@ -29,8 +28,35 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
       # This persists the data so it survives container restarts
       - postgres_data:/var/lib/postgresql/data
-    restart: always
+
+  # DB Exporter
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:v0.18.1
+    environment:
+      DATA_SOURCE_NAME: "postgresql://myuser:mypassword@db:5432/cars_db?sslmode=disable"
+    depends_on:
+      - db
+
+  # Prometheus Dtasource
+  prometheus:
+    image: prom/prometheus:v3.5.1
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  # Monitoring Visuallization Tool
+  grafana:
+    image: grafana/grafana:12.3-ubuntu
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
 
 # Define the volume for persistence
 volumes:
   postgres_data:
+  grafana_data:
