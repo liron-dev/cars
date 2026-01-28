@@ -1,10 +1,15 @@
 import os
 import psycopg2
 from flask import Flask, render_template
+from prometheus_flask_exporter import PrometheusMetrics
 
 # Create the Flask application instance
 app = Flask(__name__)
+# Export metrics to prometheus
+metrics = PrometheusMetrics(app)
+metrics.info('app_info', 'Application info', version='1.0.3')
 
+# Connect to DB
 def get_db_connection():
     conn = psycopg2.connect(
         host=os.environ.get('DB_HOST', 'db'), # Default to 'db' (service name)
