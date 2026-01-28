@@ -29,6 +29,7 @@ services:
       # This persists the data so it survives container restarts
       - postgres_data:/var/lib/postgresql/data
 
+  # DB Exporter
   postgres-exporter:
     image: prometheuscommunity/postgres-exporter:v0.18.1
     environment:
@@ -36,6 +37,7 @@ services:
     depends_on:
       - db
 
+  # Prometheus Dtasource
   prometheus:
     image: prom/prometheus:v3.5.1
     volumes:
@@ -43,6 +45,7 @@ services:
     ports:
       - "9090:9090"
 
+  # Monitoring Visuallization Tool
   grafana:
     image: grafana/grafana:12.3-ubuntu
     ports:

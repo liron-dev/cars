@@ -19,6 +19,7 @@ def get_db_connection():
     )
     return conn
 
+# Pull data from DB
 @app.route('/')
 def index():
     conn = get_db_connection()
