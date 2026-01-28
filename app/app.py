@@ -19,26 +19,6 @@ def get_db_connection():
     )
     return conn
 
-# Temporary Database:
-CARS_DATA = [
-    {
-        "name": "Porsche 911 GT3 RS",
-        "hp": 518,
-        "engine": "4.0L Flat-6",
-        "description": "The pinnacle of 911 performance. Built for the track, but legal for the road.",
-        "image": "images/porsche.jpeg",
-        "tags": ["German", "Track-Tool", "Naturally Aspirated"]
-    },
-    {
-        "name": "DeLorean DMC-12",
-        "hp": 130,
-        "engine": "2.85L V6",
-        "description": "The stainless steel icon. Does not actually come with a Flux Capacitor unless you provide the plutonium.",
-        "image": "images/delorean.jpeg",
-        "tags": ["Movie Icon", "Stainless Steel", "Gull-wing"]
-    }
-]
-
 @app.route('/')
 def index():
     conn = get_db_connection()
