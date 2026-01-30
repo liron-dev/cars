@@ -3,10 +3,10 @@
 ### 1. How to clone the repository
 ```bash
 git clone https://github.com/liron-dev/cars.git
-
+```
 ---
 
-## 📊 Observability & Monitoring
+### 📊 Observability & Monitoring
 
 This stack includes a full monitoring pipeline to track application health and database performance:
 
