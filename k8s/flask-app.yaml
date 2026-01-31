@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: car-app
+spec:
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: flask-app
+        image: car-app-web:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DB_HOST
+          value: "db.car-app.svc.cluster.local"
+        - name: DB_NAME
+          value: "cars_db"
+        - name: DB_USER
+          value: "myuser"
+        - name: DB_PASS
+          value: "mypassword"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+  namespace: car-app
+spec:
+  type: NodePort
+  selector:
+    app: web
+  ports:
+    - port: 5000
+      targetPort: 5000
+      nodePort: 30001
