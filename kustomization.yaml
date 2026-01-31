@@ -1,0 +1,20 @@
+resources:
+  - k8s/namespaces.yaml
+  - k8s/postgres.yaml
+  - k8s/flask-app.yaml
+  - k8s/monitoring-exporters.yaml
+  - k8s/monitoring-stack.yaml
+
+configMapGenerator:
+  - name: db-init-config
+    namespace: car-app
+    files:
+      - db/init.sql
+  - name: prometheus-config
+    namespace: monitoring
+    files:
+      - monitoring/prometheus/prometheus.yml
+  - name: grafana-provisioning
+    namespace: monitoring
+    files:
+      - monitoring/grafana/provisioning/datasources/datasource.yml
