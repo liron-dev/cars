@@ -57,7 +57,7 @@ spec:
         image: grafana/grafana:12.3-ubuntu
         volumeMounts:
         - name: provisioning
-          mountPath: /etc/grafana/provisioning
+          mountPath: /etc/grafana/provisioning/datasources
       volumes:
       - name: provisioning
         configMap:
