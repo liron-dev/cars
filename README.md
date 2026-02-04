@@ -16,7 +16,7 @@ docker-compose down --volumes --rmi local --remove-orphans
 minikube start --driver=docker --nodes 2
 docker build -t car-app-web:latest ./app
 minikube image load car-app-web:latest
-kubectl apply -k .
+kubectl apply -k . --server-side --force-conflicts
 # remove objects:
 kubectl delete -k . --ignore-not-found
 # delete minikube:
@@ -30,3 +30,8 @@ This stack includes a full monitoring pipeline to track application health and d
 * **Grafana**: The visualization layer. It connects to Prometheus as a data source to turn raw numbers into beautiful, actionable dashboards.
 * **Postgres Exporter**: A "sidecar" service that logs into PostgreSQL, gathers internal performance stats (like active connections or query rates), and exposes them for Prometheus to read.
 * **Prometheus Flask Exporter**: Integrated directly into the Python code to provide request rates, latency, and error counts.
+## 🐙 ArgoCD
+Argocd, the well known gitops tool is also included in this stack. Extract the password of 'admin' user with this command:
+```bash
+kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```
