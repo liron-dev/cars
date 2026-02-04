@@ -4,6 +4,7 @@ resources:
   - k8s/flask-app.yaml
   - k8s/monitoring-exporters.yaml
   - k8s/monitoring-stack.yaml
+  - k8s/argocd-installation.yaml
 
 configMapGenerator:
   - name: db-init-config
